@@ -1,0 +1,43 @@
+name: Update APT repo
+
+on:
+  repository_dispatch:
+    types: [update-apt]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Download .deb
+        run: |
+          mkdir -p pool/main/k/kfs-tg
+          curl -fsSL "${{ github.event.client_payload.deb_url }}" \
+            -o "pool/main/k/kfs-tg/kfs-tg_${{ github.event.client_payload.version }}_amd64.deb"
+
+      - name: Generate metadata
+        run: |
+          mkdir -p dists/stable/main/binary-amd64
+          apt-ftparchive packages pool/ > dists/stable/main/binary-amd64/Packages
+          gzip -k -f dists/stable/main/binary-amd64/Packages
+
+      - name: Generate Release + sign
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.APT_GPG_PRIVATE_KEY }}
+        run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --import
+          cd dists/stable
+          apt-ftparchive release . > Release
+          gpg --default-key "k0fis@users.noreply.github.com" -abs -o Release.gpg Release
+          gpg --default-key "k0fis@users.noreply.github.com" --clearsign -o InRelease Release
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Update kfs-tg to ${{ github.event.client_payload.version }}"
+          git push
