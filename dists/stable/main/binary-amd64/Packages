@@ -172,3 +172,15 @@ SHA256: aea0d50e0ef9f15bfc9faf5dbcf3f0f495132de84c1ccda93758e4cd7d14ac0c
 SHA512: 027110b4b7f06d53ee1c742fb11dc9b1087d0324bbd6c85198caecf7b4218481baf1a76ebf40bb5f85ccd047eb31778a7a7ea95702fc65815dbaeedab8d2a36c
 Description: Minimalist TUI Telegram client
 
+Package: kfs-tg
+Architecture: amd64
+Version: 1.0.4
+Maintainer: k0fis <k0fis@users.noreply.github.com>
+Filename: pool/main/k/kfs-tg/kfs-tg_1.0.4_amd64.deb
+Size: 9904394
+MD5sum: 13f0eb76e6ffea4c2d214f23f063e170
+SHA1: 5af58cd8d73cc47eb192a2edc4771cb7d4b8cc3c
+SHA256: 3260cf9ab9b156ce906f80122f447d717825024f98b6bf65232563b4b7e06628
+SHA512: cecc89413498ffaecf5d24a5da8b16cb18f1ce962395d64daa1fc307fef5f34ac56fc983769427730090511c79498dbf02605f288762c3c3ad9ca94afa74782f
+Description: Minimalist TUI Telegram client
+
